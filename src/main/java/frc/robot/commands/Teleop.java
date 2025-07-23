@@ -9,8 +9,8 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.Dimensoes;
-import frc.robot.Constants.Tracao;
+import frc.robot.Constants.DriveConstants.Dimensoes;
+import frc.robot.Constants.DriveConstants.Tracao;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveController;
 import swervelib.math.SwerveMath;

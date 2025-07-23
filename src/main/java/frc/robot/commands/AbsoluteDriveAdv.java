@@ -9,8 +9,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.Dimensoes;
-import frc.robot.Constants.Tracao;
+import frc.robot.Constants.DriveConstants.Dimensoes;
+import frc.robot.Constants.DriveConstants.Tracao;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import java.util.List;

@@ -3,8 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
-import swervelib.imu.Pigeon2Swerve;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 public class ResetPigeon extends Command{

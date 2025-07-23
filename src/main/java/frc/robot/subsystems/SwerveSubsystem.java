@@ -8,7 +8,6 @@ import java.io.File;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -27,11 +26,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.Tracao;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveConstants.Tracao;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -49,7 +47,7 @@ public class SwerveSubsystem extends SubsystemBase {
     boolean orientation = true;
     Pigeon2 pigeon = new Pigeon2(9);
 
-    private final PhotonCamera photo = new PhotonCamera("limelight"); 
+    //private final PhotonCamera photo = new PhotonCamera("limelight"); 
     private AprilTagFieldLayout aprilTagFieldLayout;
     private final Transform3d robotToCam = new Transform3d(
         new Translation3d(0.5, 0.0, 0.5), // Ajuste estas coordenadas para a posição real da sua câmera
@@ -75,10 +73,8 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             throw new RuntimeException("Erro ao carregar o layout de AprilTags", e);
         }
-    
-        // Acessa os arquivos do diretório .JSON
-        try {
-            swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.Dimensoes.MAX_SPEED);
+            try {
+            swerveDrive = new SwerveParser(directory).createSwerveDrive(DriveConstants.Dimensoes.MAX_SPEED);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

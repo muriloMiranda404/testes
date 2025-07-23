@@ -4,13 +4,13 @@
 
 package frc.robot;
 
-import frc.robot.Constants.Controle;
-import frc.robot.Constants.Trajetoria;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveConstants.Controle;
+import frc.robot.Constants.DriveConstants.Trajetoria;
 import frc.robot.commands.AlingToTarget;
 import frc.robot.commands.ResetPigeon;
-import frc.robot.commands.Teleop;
 import frc.robot.commands.Virar45;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LimelightConfigs;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -29,7 +29,7 @@ public class RobotContainer {
 
   // Aqui iniciamos o swerve
   private SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  Limelight limelight = new Limelight();
+  private LimelightConfigs limelight = new LimelightConfigs();
   
   // Controle de Xbox, troque para o qual sua equipe estará utilizando
   public XboxController controleXbox = new XboxController(Controle.xboxControle);
@@ -43,9 +43,9 @@ public class RobotContainer {
     );*/
 
     swerve.setDefaultCommand(swerve.driveCommand(
-      () -> MathUtil.applyDeadband(escolher_modo(1), Constants.Controle.DEADBAND),
-      () -> MathUtil.applyDeadband(escolher_modo(2), Constants.Controle.DEADBAND),
-      () ->  MathUtil.applyDeadband(escolher_modo(3), Constants.Controle.DEADBAND))
+      () -> MathUtil.applyDeadband(escolher_modo(1), DriveConstants.Controle.DEADBAND),
+      () -> MathUtil.applyDeadband(escolher_modo(2), DriveConstants.Controle.DEADBAND),
+      () ->  MathUtil.applyDeadband(escolher_modo(3), DriveConstants.Controle.DEADBAND))
     );
     
     NamedCommands.registerCommand("Intake", new PrintCommand("Intake"));
@@ -53,20 +53,20 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
   }
-
+  
   // Função onde os eventos (triggers) são configurados
   private void configureBindings() {
     new JoystickButton(controleXbox, 1).onTrue(new Virar45(swerve, 45, this));
     new JoystickButton(controleXbox, 2).onTrue(new Virar45(swerve, -45, this)); 
     new JoystickButton(controleXbox, 4).onTrue(new Virar45(swerve, 5000, this));
     new JoystickButton(controleXbox, 10).onTrue(new ResetPigeon(new Pigeon2(9), swerve));
+    
     new POVButton(controleXbox, 0).whileTrue(new AlingToTarget(limelight, swerve, null, 0, 0));
     new POVButton(controleXbox, 270).whileTrue(new AlingToTarget(limelight, swerve, null, 0, 0));
     new POVButton(controleXbox, 180).whileTrue(new AlingToTarget(limelight, swerve, null, 0, 0));
   }
   // Função que retorna o autônomo
   public Command getAutonomousCommand() {
-    // Aqui retornamos o comando que está no selecionador
     return swerve.getAutonomousCommand(Trajetoria.NOME_TRAJETORIA, true);
   }
 

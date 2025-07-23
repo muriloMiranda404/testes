@@ -6,17 +6,16 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LimelightConfigs;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class AlingToTarget extends Command {
 
-    private final Limelight limelight;
+    private final LimelightConfigs limelight;
     private final SwerveSubsystem subsystem;
     private final PIDController rotationController;
     private final PIDController xController;  // Novo controlador para movimento em X
     private final PIDController yController;  // Controlador para distância
-    private final RobotContainer container;
     private Translation2d translation;
     
     // Constantes para ajuste fino
@@ -32,11 +31,6 @@ public class AlingToTarget extends Command {
     private static final double kI_Y = 0.01;
     private static final double kD_Y = 0.005;
     private static final double MAX_VELOCIDADE_Y = 0.3;
-
-    private static final double KP_A = 0.1;
-    private static final double KI_A = 0.01;
-    private static final double KD_A = 0.005;
-    private PIDController aController;
     
     double setpointX;
     double setpointY;
@@ -56,20 +50,18 @@ public class AlingToTarget extends Command {
     private double ultimoTempoMudanca = 0.0;
     private static final double TEMPO_MINIMO_ESTAVEL = 0.5;
     
-    public AlingToTarget(Limelight limelight, SwerveSubsystem subsystem, RobotContainer container, double setpointX, double setpointY) {
+    public AlingToTarget(LimelightConfigs limelight, SwerveSubsystem subsystem, RobotContainer container, double setpointX, double setpointY) {
         if (limelight == null || subsystem == null || container == null) {
             throw new IllegalArgumentException("Parâmetros não podem ser nulos");
         }
         this.limelight = limelight;
         this.subsystem = subsystem;
-        this.container = container;
-        this.aController = new PIDController(KP_A, KI_A, KD_A);
         this.setpointX = setpointX;
         this.setpointY = setpointY;
         this.rotationController = new PIDController(kP_ROTATION, kI_ROTATION, kD_ROTATION);
         this.xController = new PIDController(kP_X, kI_X, kD_X);
         this.yController = new PIDController(kP_Y, kI_Y, kD_Y);
-        addRequirements(subsystem, limelight); // Removido limelight dos requirements pois não é um subsistema
+        addRequirements(subsystem, limelight);
     }
 
     @Override
@@ -103,6 +95,7 @@ public class AlingToTarget extends Command {
                 if (!temTarget) {
                     tentativas++;
                     System.out.println("Tag perdida! Tentativa " + tentativas + " de " + MAX_TENTATIVAS);
+                    limelight.setLedMode(2);
                 }
             }
             
@@ -157,7 +150,7 @@ public class AlingToTarget extends Command {
                     SmartDashboard.putNumber("Tempo desde última mudança", timer.get() - ultimoTempoMudanca);
                     SmartDashboard.putNumber("Distancia", distancia);
                     SmartDashboard.putBoolean("Distancia OK", yController.atSetpoint());
-                    limelight.setLedMode(2);
+                    limelight.setLedMode(3);
                     
                     System.out.printf("Alinhando - TX: %.2f° | Dist X: %.2f | Rot: %.2f | X: %.2f%n", 
                         tx, distancia, correcaoRotacao, correcaoX);

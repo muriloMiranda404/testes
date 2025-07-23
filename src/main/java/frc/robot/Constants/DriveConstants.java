@@ -2,22 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package frc.robot.Constants;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
-import swervelib.math.SwerveMath;
 import swervelib.parser.PIDFConfig;
 
 /**
  * Classe de constantes
  */
-public final class Constants {
+public final class DriveConstants {
   // Aqui temos várias constantes referentes as demais áreas do robô
     
   public static final class Dimensoes {
@@ -72,7 +66,7 @@ public final class Constants {
       public static final double TURN_CONSTANT = 0.75;
 
       // constante que define a velocidade máxima
-      public static double MAX_SPEED = 7.0;
+      public static final double MAX_SPEED = 7.0;
 
       public static final double dt = 0.02;
 
@@ -83,22 +77,5 @@ public final class Constants {
       public static  boolean ALIANCA = false; // Caso a aliança seja azul use false, se for vermelha use true
       public static final String NOME_TRAJETORIA = "New Auto";
       public static final String NOME_TRAJETORIA2 = "New Path2";
-    }
-    //classe que define as medidas da arena
-    public static  class FieldConstants{
-      public static final double comprimento = 16.54;
-      public static final double largura = 8.21;
-
-      public static final double CenterY = 4.105;
-      public static final double CenterX = 8.27;
-
-      public static final class RedAlliance{
-       public static Pose2d CORAL_STATION_RIGHT_RED = new Pose2d(15.5, 6.5, Rotation2d.fromDegrees(180));
-       public static Pose2d CORAL_STATION_LEFT_RED = new Pose2d(15.5, 1.5, Rotation2d.fromDegrees(180));
-      }
-      public static final class BlueAlliance{
-        public static Pose2d CORAL_STATION_RIGHT_BLUE = new Pose2d(1.0, 6.5, Rotation2d.fromDegrees(0));
-        public static Pose2d CORAL_STATION_LEFT_BLUE = new Pose2d(1.0, 1.5, Rotation2d.fromDegrees(0));
-      }
     }
 }

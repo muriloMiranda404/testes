@@ -4,8 +4,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Limelight extends SubsystemBase{
-
+public class LimelightConfigs extends SubsystemBase{
+    
     public NetworkTable Limelight(){
         return NetworkTableInstance.getDefault().getTable("limelight");
     }
@@ -40,5 +40,8 @@ public class Limelight extends SubsystemBase{
         double height_difference = tag_height - limelight_height;
         double distance = height_difference/Math.tan(angle_to_radians);
 return distance;
+    }
+    public double getTl(){
+        return Limelight().getEntry("tl").getDouble(0.0);
     }
 }
